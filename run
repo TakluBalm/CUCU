@@ -4,4 +4,4 @@ lex cucu.l
 yacc -d cucu.y
 cc lex.yy.c y.tab.c -lfl
 ./a.out input.txt
-rm a.out lex.yy.c y.tab.*
+rm a.out *.c *.h

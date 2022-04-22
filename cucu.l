@@ -11,7 +11,7 @@
 
 %%
 
-\/\*.*\*\/				{updateLineChar(yytext);}
+\/\*(.|\n)*\*\/			{updateLineChar(yytext);}
 
 if						{fprintf(yyout, "KEYWORD: %s\n", yytext); updateLineChar(yytext); yylval = strdup(yytext); return IF;}
 while					{fprintf(yyout, "KEYWORD: %s\n", yytext); updateLineChar(yytext); yylval = strdup(yytext); return WHILE;}
@@ -32,6 +32,7 @@ return					{fprintf(yyout, "KEYWORD: %s\n", yytext); updateLineChar(yytext); yyl
 =						{fprintf(yyout, "ASSIGN: %s\n", yytext); yylval = strdup(yytext); updateLineChar(yytext); return yytext[0];}
 ;						{fprintf(yyout, "SEMI_COLON: %s\n", yytext); yylval = strdup(yytext); updateLineChar(yytext); return yytext[0];}
 ,						{fprintf(yyout, "COMMA: %s\n", yytext); yylval = strdup(yytext); updateLineChar(yytext); return yytext[0];}
+\.						{fprintf(yyout, "COMMA: %s\n", yytext); yylval = strdup(yytext); updateLineChar(yytext); return yytext[0];}
 
 [a-zA-Z][a-zA-Z0-9_]*	{fprintf(yyout, "ID: %s\n", yytext); updateLineChar(yytext); yylval = malloc(strlen(yytext)+1); strcpy(yylval, yytext); return ID;}
 [0-9]+					{fprintf(yyout, "NUM: %s\n", yytext); updateLineChar(yytext); yylval = malloc(strlen(yytext)+1); strcpy(yylval, yytext); return NUM;}

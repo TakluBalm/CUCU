@@ -11,7 +11,7 @@
 	extern int yylex();
 %}
 
-%token ID NUM TYPE IF WHILE ELSE RETURN R_OP END
+%token ID NUM TYPE IF WHILE ELSE RETURN R_OP COMMENT END
 
 %%
 
@@ -71,6 +71,7 @@ STMT:	AS_STMT		{$$ = $1;}
 ;
 
 AS_STMT:	ID '=' ARITH_EXPR LINE_END			{$$ = malloc(sizeof(char)*100); sprintf($$, "assign(LHS=%s,RHS=%s)", $1, $3); free($1); free($3);}
+|			INDEX '=' ARITH_EXPR LINE_END		{$$ = malloc(sizeof(char)*100); sprintf($$, "assign(LHS=%s,RHS=%s)", $1, $3); free($1); free($3);}
 ;
 
 FUNC_CALL:	ID '(' PARAM_LIST ')'				{$$ = malloc(sizeof(char)*100); sprintf($$, "funcCall(name: %s, parameters: %s)", $1, $3); free($1); free($3);}
@@ -117,14 +118,18 @@ TERM:	ID									{$$ = $1;}
 |		INT									{$$ = $1;}
 |		FUNC_CALL 							{$$ = $1;}
 |		INDEX								{$$ = $1;}
+|		DECIMAL 							{$$ = $1;}
 |		'(' ARITH_EXPR ')'					{$$ = malloc(sizeof(char)*(strlen($2)+3)); sprintf($$, "(%s)", $2);}
 ;
 
-INT:	NUM									{$$ = malloc(sizeof(char)*(strlen($1) + 6)); sprintf($$, "int(%s)", $1); free($1);}
-|		'-' NUM								{$$ = malloc(sizeof(char)*(strlen($1) + 7)); sprintf($$, "int(-%s)", $2); free($2);}
+INT:	NUM									{$$ = malloc(sizeof(char)*(strlen($1) + 6)); sprintf($$, "%s", $1); free($1);}
+|		'-' NUM								{$$ = malloc(sizeof(char)*(strlen($1) + 7)); sprintf($$, "-%s", $2); free($2);}
 ;
 
 INDEX:	ID '['ARITH_EXPR']'					{$$ = malloc(strlen($1) + strlen($3) + 20); sprintf($$, "index(%s, pos=%s)", $1, $3); free($1); free($3);}
+
+DECIMAL:	NUM '.' NUM 					{$$ = malloc(strlen($1)+strlen($3) + 2); sprintf($$, "%s.%s", $1, $3); free($1); free($3);}
+;
 
 BOOL_EXPR:	ARITH_EXPR R_OP ARITH_EXPR 		{$$ = malloc(sizeof(char)*(strlen($1) + strlen($2) + strlen($3) + 3)); sprintf($$, "%s %s %s", $1, $2, $3);}
 ;
@@ -137,8 +142,8 @@ int main(int argc, char** argv){
 		return 0;
 	}
 	yyin = fopen(argv[1], "r");
-	yyout = fopen("lexer.txt", "w");
-	stdout = fopen("parser.txt", "w");
+	yyout = fopen("Lexer.txt", "w");
+	stdout = fopen("Parser.txt", "w");
 	yyparse();
 }
 

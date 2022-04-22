@@ -1,3 +1,34 @@
+Name: Jugal Chapatwala
+Entry Number: 2020CSB1082
+
+CS202-Lab8	Compiler U Can Understand
+
+
+Compile & Run:
+->	Enter the following commands to compile the compiler
+	-	lex cucu.l
+	-	yacc -d cucu.y
+	-	cc lex.yy.c y.tab.c -lfl
+->	To run the compiler you first need to compile it. After compilation run
+	- ./a.out <filename>.
+
 Assumptions:
-If statments has to have statements in curly brackets.
-Decimal numbers are not handles by the compiler as of yet.
+->	Conditional and Loop statments needs to have statements in curly brackets, to handle dangling else.
+->	else if construct not allowed.
+->	No for loops
+->	Increment and decrement operators not allowed.
+->	Bitwise operators are not allowed.
+->	Modulo Operator not supported
+->	Only 2 data types i.e. "int" and "char*" are supported.
+->	Single Line comments are not allowed.
+->	Outside of an function only following things are allowed:
+	-	Variable Declaration/Definition
+	-	Function Declaration/Definition
+->	Function cannot be defined inside a function.
+
+What to expect:
+->	The compiler will run on the file and generate 2 output files
+	Lexer.txt and Parser.txt.
+->	Lexer.txt contains the token information.
+->	Parser.txt contains the	structural information the the compiler extracted
+	from the file.
