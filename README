@@ -1,16 +1,14 @@
-Name: Jugal Chapatwala
-Entry Number: 2020CSB1082
-
-CS202-Lab8	Compiler U Can Understand
-
+A Compiler U Can Understand
 
 Compile & Run:
 ->	Enter the following commands to compile the compiler
 	-	lex cucu.l
 	-	yacc -d cucu.y
 	-	cc lex.yy.c y.tab.c -lfl
+	or alternatively run
+	-	bash run
 ->	To run the compiler you first need to compile it. After compilation run
-	- ./a.out <filename>.
+	-	./a.out <filename>.
 
 Assumptions:
 ->	Conditional and Loop statments needs to have statements in curly brackets, to handle dangling else.
